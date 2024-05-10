@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import Post from './components/Post';
+
 function App() {
 
   const [posts, setPosts] = useState([]);
@@ -23,10 +25,7 @@ function App() {
     for (let i = 0; i < postList.length; i++) {
       const post = postList[i];
       posts.push(
-        <div>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
-        </div>
+        <Post title={post.title} content={post.content} />
       )
     }
     setPosts(posts);
