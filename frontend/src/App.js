@@ -1,43 +1,47 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+// import React from 'react';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
 import Post from './components/Post';
+
+const retrievePosts = async () => {
+  const response = await axios.get(
+    'http://localhost:8000/posts/list',
+  );
+  return response.data;
+};
 
 function App() {
 
-  const [posts, setPosts] = useState([]);
+  const {
+    data: posts,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["queryPosts"],
+    queryFn: retrievePosts
+  });
 
-  const getPosts = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/posts/list')
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error getting posts:', error);
-      return null;
-    }
+  if (isLoading) return <div>Fetching posts...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
 
-  };
 
-  const updatePosts = async () => {
-    const postList = await getPosts();
-    if (!postList) return;
-    const posts = [];
-    for (let i = 0; i < postList.length; i++) {
-      const post = postList[i];
-      posts.push(
-        <Post title={post.title} content={post.content} />
-      )
-    }
-    setPosts(posts);
+  const makePostComponents = (posts) => {
+    return posts.map(post => 
+      <Post 
+        key={post.id} 
+        title={post.title} 
+        content={post.content}
+        created_at={post.created_at}
+      />
+    )
   }
 
-  useEffect(() => {
-    updatePosts();
-  })
 
   return (
     <div className="App">
-      {posts}
+      {makePostComponents(posts)}
     </div>
   );
 }
