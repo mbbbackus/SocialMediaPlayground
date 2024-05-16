@@ -13,13 +13,29 @@ type PostProps = {
 }
 
 export function Post(props: PostProps) {
-  return (
-    <div>
-        <h3>{props.post.title}</h3>
-        <p>{props.post.created_at}</p>
-        <p>{props.post.content}</p>
-    </div>
-  );
+
+    const date = new Date(props.post.created_at);
+
+    const formattedDate = date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      
+      const formattedTime = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+      });
+
+    return (
+        <div>
+            <h3>{props.post.title}</h3>
+            <p>{formattedDate} ({formattedTime})</p>
+            <p>{props.post.content}</p>
+        </div>
+    );
 }
 
 export default Post;
