@@ -30,10 +30,10 @@ export function Post(props: PostProps) {
       });
 
     return (
-        <div>
-            <h3>{props.post.title}</h3>
-            <p>{formattedDate} ({formattedTime})</p>
-            <p>{props.post.content}</p>
+        <div className="post">
+            <p className="post-title">{props.post.title}</p>
+            <p className="post-date">{formattedDate} ({formattedTime})</p>
+            <p className="post-content">{props.post.content}</p>
         </div>
     );
 }
