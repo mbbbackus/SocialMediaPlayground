@@ -38,4 +38,3 @@ export function Post(props: PostProps) {
     );
 }
 
-export default Post;

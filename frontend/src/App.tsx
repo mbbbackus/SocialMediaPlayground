@@ -2,7 +2,6 @@ import "./App.css";
 // import React from 'react';
 import { useQuery } from "@tanstack/react-query";
 
-import { Post, PostObject} from "./components/Post/Post";
 import { Feed } from "./components/Feed/Feed";
 import { retrievePosts } from "./queries/Posts";
 
