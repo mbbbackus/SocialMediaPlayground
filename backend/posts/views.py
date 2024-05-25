@@ -25,8 +25,11 @@ def update_post(request, pk):
     if request.method == 'PUT':
         try:
             post = Post.objects.get(pk=pk)
+            print('REQUEST: ', data)
+            print('POST', post)
             post.title = data['title']
             post.content = data['content']
+            print('POST', post)
             post.save()
             return JsonResponse({'status': 'success', 'message': 'post updated successfully'})
         except Post.DoesNotExist:
